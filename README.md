@@ -1,2 +1,2 @@
 # scrap
-Random testing
+Random testing, particularly pertaining to CI.
