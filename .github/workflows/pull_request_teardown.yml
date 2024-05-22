@@ -5,11 +5,14 @@ on:
     types: [closed]
 
 jobs:
-  teardown:
+  devops-vars:
+    uses: VirdocsSoftware/github-actions/.github/workflows/devops-vars.yml@186d1b43377be7160f3809153f275cc44ef21c85
+
+  delete-branch-deployment:
     runs-on: ubuntu-latest
+    needs: [devops-vars]
+    env:
+      STACK_NAME: my-stack-${{ needs.devops-vars.outputs.DEVOPS_BRANCH_ENV_NAME }}
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Teardown city!
+      - name: Delete Branch Deployment
+        run: echo Deleting stack ${{ env.STACK_NAME }}

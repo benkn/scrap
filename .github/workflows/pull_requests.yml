@@ -3,12 +3,12 @@ name: Pull Request Workflow
 on:
   # Run for every pull request, regardless of the target branch
   pull_request:
-    branches: ["*"]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    types: [opened, synchronize, reopened]
 
 jobs:
+  devops-vars:
+    uses: VirdocsSoftware/github-actions/.github/workflows/devops-vars.yml@186d1b43377be7160f3809153f275cc44ef21c85
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -28,11 +28,10 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, devops-vars]
+    env:
+      STACK_NAME: my-stack-${{ needs.devops-vars.outputs.DEVOPS_BRANCH_ENV_NAME }}
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello city!
+        run: echo Deploying stack ${{ env.STACK_NAME }}
