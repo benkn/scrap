@@ -8,6 +8,7 @@ jobs:
   devops-vars:
     uses: VirdocsSoftware/github-actions/.github/workflows/devops-vars.yml@186d1b43377be7160f3809153f275cc44ef21c85
 
+  # Deletes branch deployment...
   delete-branch-deployment:
     runs-on: ubuntu-latest
     needs: [devops-vars]
