@@ -7,35 +7,12 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  GLOBAL_VALUE: 'alpha'
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       # Checks-out your reposit      - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello world!
-
-  alpha:
-    runs-on: ubuntu-latest
-    if: ${{ env.GLOBAL_VALUE == 'alpha' }}
-    env:
-      VALUE: 'alpha'
-    steps:
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello world!
-
-  bravo:
-    runs-on: ubuntu-latest
-    if: ${{ env.GLOBAL_VALUE == 'alpha' }}
-    env:
-      VALUE: 'bravo'
-    steps:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello world!
