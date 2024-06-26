@@ -35,14 +35,3 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Deploying stack ${{ env.STACK_NAME }}
-
-  dev-deploy:
-    runs-on: ubuntu-latest
-    needs: [build, devops-vars]
-    if: ${{ needs.devops-vars.outputs.DEVOPS_IS_ENV_DEV == 'true' }}
-    env:
-      STACK_NAME: my-stack-${{ needs.devops-vars.outputs.DEVOPS_BRANCH_ENV_NAME }}
-    steps:
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Deploying stack ${{ env.STACK_NAME }}
