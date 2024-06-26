@@ -9,7 +9,7 @@ on:
 
 jobs:
   devops-vars:
-    uses: VirdocsSoftware/github-actions/.github/workflows/devops-vars.yml@998114aaca6eb57d38ec82cd08385116e6e2d2bf
+    uses: VirdocsSoftware/github-actions/.github/workflows/devops-vars.yml@a36c8be3831efef9dce36c39a8e9e6a0a00d5fb3
 
   build:
     runs-on: ubuntu-latest
