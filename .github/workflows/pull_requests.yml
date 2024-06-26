@@ -7,7 +7,7 @@ on:
 
 jobs:
   devops-vars:
-    uses: VirdocsSoftware/github-actions/.github/workflows/devops-vars.yml@186d1b43377be7160f3809153f275cc44ef21c85
+    uses: VirdocsSoftware/github-actions/.github/workflows/devops-vars.yml@v2
 
   build:
     runs-on: ubuntu-latest
@@ -29,6 +29,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [build, devops-vars]
+    env:
+      STACK_NAME: my-stack-${{ needs.devops-vars.outputs.DEVOPS_BRANCH_ENV_NAME }}
+    steps:
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Deploying stack ${{ env.STACK_NAME }}
+
+  dev-deploy:
+    runs-on: ubuntu-latest
+    needs: [build, devops-vars]
+    if: ${{ needs.devops-vars.outputs.DEVOPS_IS_ENV_DEV == 'true' }}
     env:
       STACK_NAME: my-stack-${{ needs.devops-vars.outputs.DEVOPS_BRANCH_ENV_NAME }}
     steps:
