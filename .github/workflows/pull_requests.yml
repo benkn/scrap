@@ -9,38 +9,38 @@ jobs:
   devops-vars:
     uses: VirdocsSoftware/github-actions/.github/workflows/devops-vars.yml@v2
 
-  do-the-thing:
+  do-the-dev-thing:
     runs-on: ubuntu-latest
     needs: [devops-vars]
     # only run on feature branches targeting develop branch or the develop branch itself
-    if: ${{ github.ref_name == 'develop' }} || (${{ needs.devops-vars.outputs.DEVOPS_TRIGGER_DEPLOYMENT == 'true' }} && ${{ github.event.pull_request.base.ref == 'develop' }})
+    if: ${{ github.ref_name == 'develop' || (needs.devops-vars.outputs.DEVOPS_TRIGGER_DEPLOYMENT == 'true' &&  github.event.pull_request.base.ref == 'develop') }}
     steps:
       - name: Run a one-line script
         run: echo Hello world!
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+  #     - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello world!
+  #     # Runs a single command using the runners shell
+  #     - name: Run a one-line script
+  #       run: echo Hello world!
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        if:
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+  #     # Runs a set of commands using the runners shell
+  #     - name: Run a multi-line script
+  #       if:
+  #       run: |
+  #         echo Add other actions to build,
+  #         echo test, and deploy your project.
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [build, devops-vars]
-    env:
-      STACK_NAME: my-stack-${{ needs.devops-vars.outputs.DEVOPS_BRANCH_ENV_NAME }}
-    steps:
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Deploying stack ${{ env.STACK_NAME }}
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: [build, devops-vars]
+  #   env:
+  #     STACK_NAME: my-stack-${{ needs.devops-vars.outputs.DEVOPS_BRANCH_ENV_NAME }}
+  #   steps:
+  #     # Runs a single command using the runners shell
+  #     - name: Run a one-line script
+  #       run: echo Deploying stack ${{ env.STACK_NAME }}
