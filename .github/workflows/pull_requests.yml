@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [devops-vars]
     # only run on feature branches targeting develop branch or the develop branch itself
-    if: ${{ github.ref_name == 'develop' || (needs.devops-vars.outputs.DEVOPS_TRIGGER_DEPLOYMENT == 'true' &&  github.event.pull_request.base.ref == 'develop') }}
+    if: ${{ github.ref_name == 'main' || (needs.devops-vars.outputs.DEVOPS_TRIGGER_DEPLOYMENT == 'true' &&  github.event.pull_request.base.ref == 'main') }}
     steps:
       - name: Run a one-line script
         run: echo Hello world!
