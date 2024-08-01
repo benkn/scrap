@@ -8,6 +8,8 @@ on:
 jobs:
   devops-vars:
     uses: VirdocsSoftware/github-actions/.github/workflows/devops-vars.yml@v2
+    with:
+      DEPLOY_FEATURE_BRANCHES: true
 
   echo-vars:
     runs-on: ubuntu-latest
