@@ -9,6 +9,15 @@ jobs:
   devops-vars:
     uses: VirdocsSoftware/github-actions/.github/workflows/devops-vars.yml@v2
 
+  echo-vars:
+    runs-on: ubuntu-latest
+    needs: [devops-vars]
+    steps:
+      - name: Echo vars
+        run: |
+          echo "DEVOPS_BRANCH_ENV_NAME=${{ needs.devops-vars.outputs.DEVOPS_BRANCH_ENV_NAME }}"
+          echo "DEVOPS_TRIGGER_DEPLOYMENT=${{ needs.devops-vars.outputs.DEVOPS_TRIGGER_DEPLOYMENT }}"
+
   do-the-dev-thing:
     runs-on: ubuntu-latest
     needs: [devops-vars]
